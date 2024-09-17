@@ -1,4 +1,4 @@
-package org.acme.getting.started;
+package org;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;

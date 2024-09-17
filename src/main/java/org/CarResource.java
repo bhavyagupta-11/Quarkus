@@ -1,4 +1,4 @@
-package org.acme.getting.started;
+package org;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

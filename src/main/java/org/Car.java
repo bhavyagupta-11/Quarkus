@@ -1,4 +1,4 @@
-package org.acme.getting.started;
+package org;
 
 public class Car {
     private String thingId;
