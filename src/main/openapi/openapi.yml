@@ -1,42 +1,172 @@
 openapi: 3.0.3
 info:
-  title: Generated API
+  title: Car API
   version: "1.0"
 paths:
-  /fruits:
+  /cars:
     get:
+      summary: List all cars
       responses:
-        200:
+        '200':
           description: OK
           content:
-            application/json: { }
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
     post:
+      summary: Create a new car
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Fruit'
+              $ref: '#/components/schemas/Car'
+        required: true
       responses:
-        200:
+        '201':
+          description: Car Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+  /cars/{id}:
+    get:
+      summary: Get a car by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
           description: OK
           content:
-            application/json: { }
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car Not Found
+    put:
+      summary: Update a car by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+        required: true
+      responses:
+        '200':
+          description: Car Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car Not Found
     delete:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Fruit'
+      summary: Delete a car by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
       responses:
-        200:
-          description: OK
-          content:
-            application/json: { }
+        '204':
+          description: Car Deleted
+        '404':
+          description: Car Not Found
 components:
   schemas:
-    Fruit:
+    Car:
+      type: object
       properties:
-        description:
+        thingId:
           type: string
-        name:
+        policyId:
           type: string
+        attributes:
+          $ref: '#/components/schemas/Attributes'
+        features:
+          $ref: '#/components/schemas/Features'
+    Attributes:
+      type: object
+      properties:
+        timestamp:
+          type: string
+    Features:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        vehicle:
+          $ref: '#/components/schemas/Vehicle'
+        tirePressure:
+          $ref: '#/components/schemas/TirePressure'
+    Location:
+      type: object
+      properties:
+        properties:
+          $ref: '#/components/schemas/LocationProperties'
+    LocationProperties:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+    Vehicle:
+      type: object
+      properties:
+        properties:
+          $ref: '#/components/schemas/VehicleProperties'
+    VehicleProperties:
+      type: object
+      properties:
+        speed:
+          type: number
+          format: double
+        fuelLevel:
+          type: number
+          format: double
+        engineTemperature:
+          type: number
+          format: double
+        rpm:
+          type: integer
+        batteryVoltage:
+          type: number
+          format: double
+        odometer:
+          type: number
+          format: double
+    TirePressure:
+      type: object
+      properties:
+        properties:
+          $ref: '#/components/schemas/TirePressureProperties'
+    TirePressureProperties:
+      type: object
+      properties:
+        frontLeft:
+          type: number
+          format: double
+        frontRight:
+          type: number
+          format: double
+        rearLeft:
+          type: number
+          format: double
+        rearRight:
+          type: number
+          format: double
